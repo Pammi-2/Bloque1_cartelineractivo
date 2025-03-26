@@ -14,17 +14,18 @@ window.onload = function () {
         mouseX = e.clientX;
         mouseY = e.clientY;
     });
-
+  //// Define las coordenadas y dimensiones del rectángulo dentro del canvas
     canvas.addEventListener("click", (e) => {
         const rectX = margin;
         const rectY = margin;
         const rectWidth = canvas.width - margin * 2;
         const rectHeight = canvas.height - margin * 2;
-
+ // Verifica si el clic ocurrió dentro del rectángulo
         if (
             e.clientX >= rectX && e.clientX <= rectX + rectWidth &&
             e.clientY >= rectY && e.clientY <= rectY + rectHeight
         ) {
+             // Si el clic está dentro del área definida, cambia el color de relleno
             fillColor = getRandomDarkColor();
         }
     });
