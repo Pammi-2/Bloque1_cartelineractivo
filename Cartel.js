@@ -32,7 +32,7 @@ window.onload = function () {
 
     function getRandomDarkColor() {
         let colors = [
-            "#000000", "#F2CE16", "#8C1F28", "##035AA6", "#F2668B", // Negros
+            "#000000", "#F2CE16", "#8C1F28", "##035AA6", "#F2668B", // negros
             "#F26800", "#FFEC5C", "#400036" // Azules oscuros
         ];
         return colors[Math.floor(Math.random() * colors.length)];
@@ -46,7 +46,7 @@ window.onload = function () {
         
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
-
+//dibuja un rectangulo
     function drawRectangle() {
         ctx.fillStyle = fillColor; 
         ctx.strokeStyle = "white";
@@ -88,47 +88,52 @@ window.onload = function () {
         constructor(x, y, spikes, outerRadius, innerRadius, color) {
             this.x = x;
             this.y = y;
-            this.spikes = spikes;
-            this.outerRadius = outerRadius;
+            this.spikes = spikes;  // Número de puntas de la estrella
+            this.outerRadius = outerRadius; // Radio externo (punta más alejada del centro)
             this.innerRadius = innerRadius;
-            this.color = color;
+            this.color = color; // Color de la estrella
+              // Velocidad de movimiento aleatoria en X e Y
             this.speedX = (Math.random() - 0.5) * 10;
             this.speedY = (Math.random() - 0.5) * 10;
+               // Ajusta la velocidad si es demasiado baja
             this.fixSpeed();
         }
 
         fixSpeed() {
+             // Evita velocidades demasiado bajas para que las estrellas siempre se muevan
             if (Math.abs(this.speedX) < 2) this.speedX = (Math.random() - 0.5) * 10;
             if (Math.abs(this.speedY) < 2) this.speedY = (Math.random() - 0.5) * 10;
         }
 
         update() {
+             // Mueve la estrella en X e Y según su velocidad
             this.x += this.speedX;
             this.y += this.speedY;
 
+ // Rebote en los bordes horizontales del canvas
             if (this.x + this.outerRadius > canvas.width || this.x - this.outerRadius < 0) {
                 this.speedX *= -1;
                 this.fixSpeed();
                 addNewStar();
             }
-
+ // Rebote en los bordes verticales del canvas
             if (this.y + this.outerRadius > canvas.height || this.y - this.outerRadius < 0) {
                 this.speedY *= -1;
                 this.fixSpeed();
                 addNewStar();
             }
         }
-
+ // Dibuja la estrella usando una función
         draw() {
             drawStar(this.x, this.y, this.spikes, this.outerRadius, this.innerRadius, this.color);
         }
     }
-
+// Función para obtener un color aleatorio en tonos de rojo y rosa
     function getRandomRedPinkColor() {
         const redTones = ["#FF4D6D", "#FF165D", "#D90429", "#FF758F", "#FF1E56"];
         return redTones[Math.floor(Math.random() * redTones.length)];
     }
-
+// Lista inicial de estrellas
     let stars = [
         new Star(canvas.width / 4, canvas.height / 1.5, 6, 80, 30, getRandomRedPinkColor()),
         new Star(canvas.width / 2, canvas.height / 1.5, 6, 80, 30, getRandomRedPinkColor()),
