@@ -141,7 +141,7 @@ window.onload = function () {
     ];
 
     let lastSpawnTime = Date.now();
-
+// Función para agregar una nueva estrella si no hay muchas y ha pasado cierto tiempo
     function addNewStar() {
         if (stars.length < 25 && Date.now() - lastSpawnTime > 500) {
             let newStar = new Star(
@@ -158,27 +158,31 @@ window.onload = function () {
     }
 
     function animate() {
+       /// Limpia el canvas antes de volver a dibujar los elementos para evitar superposiciones.
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawBackground();
         drawRectangle();
-
+    /// Dibuja el fondo y el rectángulo en cada fotograma.
         stars.forEach(star => {
             star.update();
             star.draw();
         });
-
+       /// Actualiza y dibuja cada estrella
         ctx.globalCompositeOperation = "color-dodge"; 
+
+        ///Cambia la forma en que los colores se mezclan, creando un efecto brillante en la siguiente figura.
         ctx.beginPath();
         ctx.arc(mouseX, mouseY, 100, 0, Math.PI * 2);
         ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
         ctx.shadowBlur = 15;
         ctx.shadowColor = "white";
         ctx.fill();
+        //Dibuja un círculo semitransparente en la posición del mouse con un efecto de luz blanca.
         ctx.globalCompositeOperation = "source-over";
 
         requestAnimationFrame(animate);
     }
-
+    ///Redimensionamiento del Canvas
     window.addEventListener("resize", () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
